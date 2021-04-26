@@ -55,7 +55,7 @@ module.exports = {
       type: 'string',
       required: true,
       label: 'Unique application identifier',
-      default: 'org.nativescript.application',
+      default: 'xsuslov/vue-three-template',
       validate: validateAppId,
       when: '!inPlace',
     },
