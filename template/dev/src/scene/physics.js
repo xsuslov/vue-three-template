@@ -61,13 +61,13 @@ export default class Physics {
     body.setFriction(4);
     body.setRollingFriction(10);
     this.physicsWorld.addRigidBody(body);
+    // this.physicsWorld.setGravity(new window.Ammo.btVector3(0, -550, 0));
     this.arrayOfBodies.push({ name, body });
   }
 
   removeRigidBody(name) {
     const currentBody = this.arrayOfBodies.find((item) => item.name === name).body;
     this.physicsWorld.removeRigidBody(currentBody);
-    console.log(this.arrayOfBodies);
   }
 
   moveBody(scalingFactor, moveX, moveY, moveZ, object, name) {
