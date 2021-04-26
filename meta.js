@@ -55,7 +55,7 @@ module.exports = {
       type: 'string',
       required: true,
       label: 'Unique application identifier',
-      default: 'vue-three-template',
+      default: 'xsuslov vue-three-template',
       validate: validateAppId,
       when: '!inPlace',
     },
