@@ -58,8 +58,8 @@ export default class Physics {
       mass, motionState, colShape, localInertia,
     );
     const body = new window.Ammo.btRigidBody(rbInfo);
-    // body.setFriction(friction);
-    // body.setRollingFriction(rollingFriction);
+    body.setFriction(4);
+    body.setRollingFriction(10);
     this.physicsWorld.addRigidBody(body);
     this.arrayOfBodies.push({ name, body });
   }
