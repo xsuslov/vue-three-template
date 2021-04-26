@@ -1,0 +1,38 @@
+.title {
+  font-weight: normal;
+  margin: 0;
+  &-lg {
+    font-size: em(40);
+  }
+  &-md {
+    font-size: em(34);
+  }
+  &-sm {
+    font-size: em(24);
+  }
+  &-xs {
+    font-size: em(18);
+  }
+}
+.text {
+  font-size: em(15);
+  &-lg {
+    font-size: em(20);
+  }
+  &-md {
+    font-size: em(18);
+  }
+  &-sm {
+    font-size: em(16);
+  }
+  &-smm {
+    font-size: em(12);
+  }
+  &-xs {
+    font-size: em(14);
+    line-height: 1.4;
+  }
+  &-margin {
+    margin-top: 2.1em;
+  }
+}

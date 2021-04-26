@@ -1,0 +1,12 @@
+@import "mixins";
+
+/* Example of connecting fonts
+*
+* Please, use https://transfonter.org/ with options "Family support" and "Fix vertical metrics"
+* Add format .eot, .ttf, .woff for cross-browser compatibility
+*
+* @include font-face("Montserrat", "../fonts/Montserrat/Montserrat-Regular", normal, normal);
+* @include font-face("Montserrat", "../fonts/Montserrat/Montserrat-Medium", 500, normal);
+* @include font-face("Montserrat", "../fonts/Montserrat/Montserrat-Bold", 700, normal);
+*
+*/
