@@ -22,6 +22,7 @@ let clock;
 
 let box;
 let ball;
+let ground;
 
 let keyEvents;
 
@@ -113,15 +114,15 @@ export default {
         x: 0, y: 0, z: 0, w: 1,
       };
       const mass = 0;
-      const blockPlane = new THREE.Mesh(new THREE.BoxBufferGeometry(),
+      ground = new THREE.Mesh(new THREE.BoxBufferGeometry(),
         new THREE.MeshPhongMaterial({ color: 0xFFFF00 }));
 
-      blockPlane.position.set(position.x, position.y, position.z);
-      blockPlane.scale.set(scale.x, scale.y, scale.z);
+      ground.position.set(position.x, position.y, position.z);
+      ground.scale.set(scale.x, scale.y, scale.z);
 
-      scene.add(blockPlane);
+      scene.add(ground);
       // objects.push(blockPlane);
-      physics.addRigidBody(blockPlane, mass, position, scale, quaternion);
+      physics.addRigidBody(ground, mass, position, scale, quaternion, null, 'ground');
     },
     createBorders(posX, posY, posZ, scaleX, scaleY, scaleZ) {
       const quaternion = {
@@ -133,7 +134,6 @@ export default {
 
       kObject.position.set(posX, posY, posZ);
       kObject.scale.set(scaleX, scaleY, scaleZ);
-
       scene.add(kObject);
       physics.addRigidBody(
         kObject,
@@ -141,8 +141,8 @@ export default {
         { x: posX, y: posY, z: posZ },
         { x: scaleX, y: scaleY, z: scaleZ },
         quaternion,
-        4,
-        10,
+        null,
+        'border',
       );
     },
     createBall() {
@@ -161,7 +161,7 @@ export default {
         new THREE.MeshBasicMaterial({ color: 0x0000FF }));
       ball.position.set(position.x, position.y, position.z);
       scene.add(ball);
-      physics.addMoveBody(ball, mass, position, scale, quaternion, 4, 10);
+      physics.addRigidBody(ball, mass, position, scale, quaternion, radius, 'ball');
     },
     createBox() {
       const position = {
@@ -193,10 +193,12 @@ export default {
         moveY = 0;
       }
       if (moveX === 0 && moveY === 0 && moveZ === 0) return;
-      physics.moveBody(50, moveX, moveY, moveZ);
+      physics.moveBody(50, moveX, moveY, moveZ, ball, 'ball');
       const collisionBall = new Collision(ball, box);
       collisionBall.getCollision(() => {
         console.log('collision detect');
+        ground.visible = false;
+        // physics.removeRigidBody('ground');
       });
     },
     dragObjects(e) {
