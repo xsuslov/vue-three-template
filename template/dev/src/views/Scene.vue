@@ -197,7 +197,7 @@ export default {
       const collisionBall = new Collision(ball, box);
       collisionBall.getCollision(() => {
         console.log('collision detect');
-        ground.visible = false;
+        // ground.visible = false;
         // physics.removeRigidBody('ground');
       });
     },
