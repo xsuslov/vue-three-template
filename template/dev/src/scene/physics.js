@@ -3,10 +3,11 @@ export default class Physics {
     this.physicsWorld = null;
     this.rigidBodies = [];
     this.object = null;
-    this.state = { DISABLE_DEACTIVATION: 4 };
+    this.transform = null;
   }
 
   setupPhysicsWorld() {
+    this.transform = new window.Ammo.btTransform();
     const collisionConfiguration = new window.Ammo.btDefaultCollisionConfiguration();
     const dispatcher = new window.Ammo.btCollisionDispatcher(collisionConfiguration);
     const overlappingPairCache = new window.Ammo.btDbvtBroadphase();
@@ -17,7 +18,6 @@ export default class Physics {
   }
 
   updatePhysics(deltaTime) {
-    const transform = new window.Ammo.btTransform();
     // Step world
     this.physicsWorld.stepSimulation(deltaTime, 10);
 
@@ -27,9 +27,9 @@ export default class Physics {
       const objAmmo = objThree.userData.physicsBody;
       const ms = objAmmo.getMotionState();
       if (ms) {
-        ms.getWorldTransform(transform);
-        const p = transform.getOrigin();
-        const q = transform.getRotation();
+        ms.getWorldTransform(this.transform);
+        const p = this.transform.getOrigin();
+        const q = this.transform.getRotation();
         objThree.position.set(p.x(), p.y(), p.z());
         objThree.quaternion.set(q.x(), q.y(), q.z(), q.w());
       }
@@ -37,15 +37,14 @@ export default class Physics {
   }
 
   addRigidBody(object, mass, position, scale, quaternion, friction = 4, rollingFriction = 10) {
-    const transform = new window.Ammo.btTransform();
-    transform.setIdentity();
-    transform.setOrigin(new window.Ammo.btVector3(
+    this.transform.setIdentity();
+    this.transform.setOrigin(new window.Ammo.btVector3(
       position.x, position.y, position.z,
     ));
-    transform.setRotation(new window.Ammo.btQuaternion(
+    this.transform.setRotation(new window.Ammo.btQuaternion(
       quaternion.x, quaternion.y, quaternion.z, quaternion.w,
     ));
-    const motionState = new window.Ammo.btDefaultMotionState(transform);
+    const motionState = new window.Ammo.btDefaultMotionState(this.transform);
     const colShape = new window.Ammo.btBoxShape(new window.Ammo.btVector3(
       scale.x * 0.5, scale.y * 0.5, scale.z * 0.5,
     ));
@@ -64,15 +63,14 @@ export default class Physics {
   }
 
   addMoveBody(object, mass, position, scale, quaternion, friction, rollingFriction) {
-    const transform = new window.Ammo.btTransform();
-    transform.setIdentity();
-    transform.setOrigin(new window.Ammo.btVector3(
+    this.transform.setIdentity();
+    this.transform.setOrigin(new window.Ammo.btVector3(
       position.x, position.y, position.z,
     ));
-    transform.setRotation(new window.Ammo.btQuaternion(
+    this.transform.setRotation(new window.Ammo.btQuaternion(
       quaternion.x, quaternion.y, quaternion.z, quaternion.w,
     ));
-    const motionState = new window.Ammo.btDefaultMotionState(transform);
+    const motionState = new window.Ammo.btDefaultMotionState(this.transform);
 
     const colShape = new window.Ammo.btSphereShape(3);
     colShape.setMargin(0.05);
@@ -85,9 +83,8 @@ export default class Physics {
     );
     const body = new window.Ammo.btRigidBody(rbInfo);
 
-    body.setFriction(4);
-    body.setRollingFriction(10);
-    body.setActivationState(this.state.DISABLE_DEACTIVATION);
+    body.setFriction(friction);
+    body.setRollingFriction(rollingFriction);
 
     this.physicsWorld.addRigidBody(body);
     this.object = object;

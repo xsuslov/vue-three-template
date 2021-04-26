@@ -29,7 +29,6 @@ let keyEvents;
 const objects = [];
 
 const mouse = new THREE.Vector2();
-const raycaster = new THREE.Raycaster();
 
 export default {
   methods: {
@@ -56,9 +55,10 @@ export default {
       // const controls = new OrbitControls(camera, renderer.domElement);
       // controls.target.y = 0.5;
       // controls.update();
+
       // move objects
-      // const controlsDrag = new DragControls([...objects], camera, renderer.domElement);
-      // controlsDrag.addEventListener('drag', this.dragObjects);
+      const controlsDrag = new DragControls([...objects], camera, renderer.domElement);
+      controlsDrag.addEventListener('drag', this.dragObjects);
     },
     setupGraphics() {
       clock = new THREE.Clock();
@@ -120,6 +120,7 @@ export default {
       blockPlane.scale.set(scale.x, scale.y, scale.z);
 
       scene.add(blockPlane);
+      // objects.push(blockPlane);
       physics.addRigidBody(blockPlane, mass, position, scale, quaternion, 4, 10);
     },
     createBorders(posX, posY, posZ, scaleX, scaleY, scaleZ) {
@@ -178,9 +179,9 @@ export default {
       box = new THREE.Mesh(collisionBox, material);
       box.position.set(position.x, position.y, position.z);
       scene.add(box);
-      physics.addRigidBody(
-        box, mass, position, scale, quaternion, 4, 10,
-      );
+      // physics.addRigidBody(
+      //   box, mass, position, scale, quaternion, 4, 10,
+      // );
     },
     moveBall() {
       let moveX;
