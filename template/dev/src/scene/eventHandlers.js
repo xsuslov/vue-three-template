@@ -1,6 +1,5 @@
 export default class EventHandlers {
   constructor(event) {
-    this.event = event;
     this.direction = {
       left: 0,
       right: 0,
@@ -9,8 +8,8 @@ export default class EventHandlers {
     };
   }
 
-  init() {
-    if (this.event === 'key') {
+  init(event) {
+    if (event === 'key') {
       window.addEventListener('keydown', this.keydown.bind(this), false);
       window.addEventListener('keyup', this.keyup.bind(this), false);
     }

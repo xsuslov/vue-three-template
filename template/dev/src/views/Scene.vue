@@ -47,8 +47,8 @@ export default {
       this.createBorders(0, 6, -35, 164, 10, 5.4);
       this.createBorders(0, 6, 55, 164, 10, 5.4);
       // key events
-      keyEvents = new EventHandlers('key');
-      keyEvents.init();
+      keyEvents = new EventHandlers();
+      keyEvents.init('key');
       this.renderFrame();
 
       // move camera
@@ -121,7 +121,7 @@ export default {
 
       scene.add(blockPlane);
       // objects.push(blockPlane);
-      physics.addRigidBody(blockPlane, mass, position, scale, quaternion, 4, 10);
+      physics.addRigidBody(blockPlane, mass, position, scale, quaternion);
     },
     createBorders(posX, posY, posZ, scaleX, scaleY, scaleZ) {
       const quaternion = {
@@ -193,7 +193,7 @@ export default {
         moveY = 0;
       }
       if (moveX === 0 && moveY === 0 && moveZ === 0) return;
-      physics.moveBody(25, moveX, moveY, moveZ);
+      physics.moveBody(50, moveX, moveY, moveZ);
       const collisionBall = new Collision(ball, box);
       collisionBall.getCollision(() => {
         console.log('collision detect');

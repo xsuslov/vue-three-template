@@ -36,7 +36,7 @@ export default class Physics {
     }
   }
 
-  addRigidBody(object, mass, position, scale, quaternion, friction = 4, rollingFriction = 10) {
+  addRigidBody(object, mass, position, scale, quaternion) {
     this.transform.setIdentity();
     this.transform.setOrigin(new window.Ammo.btVector3(
       position.x, position.y, position.z,
@@ -55,9 +55,6 @@ export default class Physics {
       mass, motionState, colShape, localInertia,
     );
     const body = new window.Ammo.btRigidBody(rbInfo);
-
-    body.setFriction(friction);
-    body.setRollingFriction(rollingFriction);
 
     this.physicsWorld.addRigidBody(body);
   }
